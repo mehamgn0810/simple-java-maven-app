@@ -10,32 +10,9 @@ pipeline{
     stages{
       stage("State 1"){
         steps{
-          echo 'Stage 1 - Delete directory'
-          deleteDir()
+          echo "Url: ${params.URL}"
+          echo "Version: ${params.Version}"
+          echo "CleanUp: ${params.CleanUp}"
+          echo "Threads: ${params.Threads}"
         }
-      }
-      stage("Stage 2"){
-        steps{
-          echo 'Stage 2 - Git clone'
-          bat "git clone https://github.com/mehamgn0810/simple-java-maven-app.git"
-          echo 'Clone success'
-        }
-      }
-      stage("stage 3"){
-        steps{
-          echo 'Stage 3 - Open project'
-          dir("simple-java-maven-app"){
-              bat 'mvn clean install'
-          }
-        }
-      }
-      stage("Stage 4"){
-        steps{
-          echo 'Test'
-          dir("simple-java-maven-app"){
-              bat 'mvn test'
-          }
-        }
-      }
-    }
 }
