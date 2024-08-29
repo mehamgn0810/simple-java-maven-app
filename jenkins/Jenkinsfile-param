@@ -15,4 +15,5 @@ pipeline{
           echo "CleanUp: ${params.CleanUp}"
           echo "Threads: ${params.Threads}"
         }
+  }
 }
