@@ -1,0 +1,41 @@
+pipeline{
+  agent any
+  parameters{
+    string(name: 'URL', defaultValue: 'https://www.google.com', description: 'Enter endpoint url')
+    password(name: 'Password', defaultValue: '', description: 'Enter Password')
+    text(name: 'Version', defaultValue: '', description: 'Platform version')
+    booleanParam(name: 'CleanUp', defaultValue: true, description: 'Cleanup the previous build?')
+    choice(name: 'Threads', choices: ['1', '2', '3'], description: 'Number of Threads to be executed')
+  }
+    stages{
+      stage("State 1"){
+        steps{
+          echo 'Stage 1 - Delete directory'
+          deleteDir()
+        }
+      }
+      stage("Stage 2"){
+        steps{
+          echo 'Stage 2 - Git clone'
+          bat "git clone https://github.com/mehamgn0810/simple-java-maven-app.git"
+          echo 'Clone success'
+        }
+      }
+      stage("stage 3"){
+        steps{
+          echo 'Stage 3 - Open project'
+          dir("simple-java-maven-app"){
+              bat 'mvn clean install'
+          }
+        }
+      }
+      stage("Stage 4"){
+        steps{
+          echo 'Test'
+          dir("simple-java-maven-app"){
+              bat 'mvn test'
+          }
+        }
+      }
+    }
+}
